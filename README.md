@@ -10,4 +10,22 @@ The app is very limited and consists for now of:
 
 This is how it looks:
 
-![Demo](/public/videos/demo.mp4)
+1. Home page
+
+![Home](/public/screenshots/home.png)
+
+2. Admin panel
+
+![Admin 1](/public/screenshots/admin%201.png)
+
+![Admin 2](/public/screenshots/admin%202.png)
+
+![Admin 3](/public/screenshots/admin%203.png)
+
+3. Search page
+
+![Search 1](/public/screenshots/search%201.png)
+![Search 2](/public/screenshots/search%202.png)
+![Search 3](/public/screenshots/search%203.png)
+![Search 4](/public/screenshots/search%204.png)
+![Search 5](/public/screenshots/search%205.png)
