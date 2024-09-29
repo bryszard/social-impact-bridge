@@ -1,0 +1,67 @@
+<div class="max-w-lg mx-auto my-6 p-6 bg-white shadow-lg rounded-lg">
+  <h1 class="text-2xl font-bold text-green-600 mb-6 text-center">Contact Selected Nonprofits</h1>
+
+  <!-- Display selected nonprofits -->
+  <% if @nonprofits.any? %>
+    <div class="mb-6">
+      <h2 class="mb-2 text-lg font-semibold text-gray-700">You are contacting:</h2>
+      <ul class="space-y-2">
+        <% @nonprofits.each do |nonprofit| %>
+          <li class="text-green-500 text-lg">
+            <%= nonprofit.name %> <%= nonprofit.logo %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% else %>
+    <p class="text-gray-600 text-center">No nonprofits selected.</p>
+    <p class="text-center mt-4"></p>
+      <%= link_to "Search for Nonprofits", search_path, class: "text-green-600 hover:text-green-800 underline" %>
+    </p>
+  <% end %>
+
+  <!-- Contact form -->
+  <%= form_with url: contact_nonprofits_path, method: :post, local: true, class: "space-y-4" do |f| %>
+    <fieldset class="space-y-4">
+      <legend class="text-lg font-semibold text-green-500">Contact Information</legend>
+
+      <div>
+        <%= f.label :company_name, "Company Name", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :company_name, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500" %>
+      </div>
+
+      <div>
+        <%= f.label :representative_name, "Representative Name", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :representative_name, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500" %>
+      </div>
+
+      <div>
+        <%= f.label :contact_email, "Contact Email", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.email_field :contact_email, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500" %>
+      </div>
+
+      <div>
+        <%= f.label :other_contact_details, "Other Contact Details", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_area :other_contact_details, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500" %>
+      </div>
+    </fieldset>
+
+    <fieldset class="space-y-4 mt-4">
+      <legend class="text-lg font-semibold text-green-500">Project Information</legend>
+
+      <div>
+        <%= f.label :project_description, "Project Description", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_area :project_description, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500" %>
+      </div>
+
+      <div>
+        <%= f.label :additional_information, "Additional Information", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_area :additional_information, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500" %>
+      </div>
+    </fieldset>
+
+    <div class="mt-6">
+      <%= f.submit "Send", class: "w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" %>
+    </div>
+  <% end %>
+</div>

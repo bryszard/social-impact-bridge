@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  impact_on: MyString
+  budget: 9.99
+  area_of_activity: MyString
+  status: 1
+  nonprofit: one
+
+two:
+  name: MyString
+  description: MyText
+  impact_on: MyString
+  budget: 9.99
+  area_of_activity: MyString
+  status: 1
+  nonprofit: two

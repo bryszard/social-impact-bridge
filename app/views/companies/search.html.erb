@@ -1,0 +1,107 @@
+<div class="max-w-lg mx-auto my-6 p-6 bg-white shadow-lg rounded-lg">
+  <h1 class="text-2xl font-bold text-green-600 mb-6 text-center">Find Matching Nonprofits</h1>
+
+  <%= form_with url: search_path, method: :get, local: true, class: "space-y-4" do |f| %>
+    <fieldset class="space-y-4">
+      <legend class="text-lg font-semibold text-green-500">Project details</legend>
+
+      <div>
+        <%= f.label :budget, "Budget", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.number_field :budget,
+          value: params[:budget] || 5_000,
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+        %>
+      </div>
+
+      <div>
+        <%= f.label :area_of_activity, "Area of Activity", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.select :area_of_activity, options_for_select([['Any', nil]] + NONPROFIT_CONFIG[:areas_of_activity].map { |a| [a, a] }, params[:area_of_activity]),
+          {},
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+        %>
+      </div>
+
+      <div>
+        <%= f.label :desired_impact_on, "Desired Impact On", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.select :desired_impact_on, options_for_select([['Any', nil]] + NONPROFIT_CONFIG[:desired_impact_on].map { |d| [d, d] }, params[:desired_impact_on]),
+          {},
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+        %>
+      </div>
+
+      <div>
+        <%= f.label :nonprofit_size, "Nonprofit Size (Income Range)", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.select :nonprofit_size, options_for_select([['Any', nil], ['Small (< 100k)', 100_000], ['Medium (100k - 500k)', 500_000], ['Large (> 500k)', 1_000_000]], params[:nonprofit_size]),
+          {},
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+        %>
+      </div>
+
+      <div>
+        <%= f.label :project_location, "Project Location", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.select :project_location, options_for_select([['Any', nil]] + NONPROFIT_CONFIG[:operating_in].map { |o| [o, o] }, params[:project_location]),
+          {},
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+        %>
+      </div>
+    </fieldset>
+
+    <div class="mt-6">
+      <%=
+        f.submit "Find Matching NGOs",
+        class: "w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+      %>
+    </div>
+  <% end %>
+</div>
+
+
+<% if @nonprofits.any? %>
+  <div class="max-w-3xl mx-auto my-8" data-controller="ngo-select">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold text-green-600">Matching Nonprofits</h2>
+      <button
+        id="contact-all-btn"
+        class="bg-green-500 text-white px-4 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled
+        data-ngo-select-target="contactButton"
+        data-action="ngo-select#contactAll">
+        Contact All
+      </button>
+    </div>
+
+    <ul id="ngo-list" class="space-y-4">
+      <% @nonprofits.each do |nonprofit| %>
+        <li
+          class="selectable-card p-4 shadow-md rounded-lg border border-gray-200 cursor-pointer flex items-center space-x-4"
+          data-ngo-select-target="card"
+          data-action="click->ngo-select#toggleSelection"
+          data-nonprofit-id="<%= nonprofit.id %>">
+
+          <!-- Hidden checkbox -->
+          <input
+            type="checkbox"
+            class="ngo-checkbox hidden"
+            data-nonprofit-id="<%= nonprofit.id %>"
+            data-ngo-select-target="checkbox">
+
+          <!-- Nonprofit details -->
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-green-500"><%= nonprofit.name %> <%= nonprofit.logo %></h3>
+            <p class="text-sm text-gray-600">
+              <strong>Area of Activity:</strong> <%= nonprofit.area_of_activity %><br>
+              <strong>Impact On:</strong> <%= nonprofit.desired_impact_on %><br>
+              <strong>Income:</strong> <%= number_to_currency(nonprofit.income) %><br>
+              <strong>Location:</strong> <%= nonprofit.operating_in %><br>
+              <strong>Project Count:</strong> <%= nonprofit.projects.count %>
+            </p>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <div class="max-w-3xl mx-auto my-8">
+    <p class="text-gray-600 text-center">No matching nonprofits found based on your criteria.</p>
+  </div>
+<% end %>
