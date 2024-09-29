@@ -21,6 +21,7 @@ gem "jbuilder"
 
 gem "avo"
 gem "devise"
+gem "faker"
 gem "tailwindcss-rails"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
@@ -47,7 +48,6 @@ group :development, :test do
 end
 
 group :development do
-  gem "faker"
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
@@ -57,3 +57,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "dockerfile-rails", ">= 1.6", :group => :development
+
+gem "aws-sdk-s3", "~> 1.166", :require => false
