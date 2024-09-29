@@ -1,24 +1,13 @@
-# README
+# Social impact link
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a draft of an app for Hearty Foundation, which was a challenge for Hack Yeah 2024 hackathon.
 
-Things you may want to cover:
+The app is very limited and consists for now of:
 
-* Ruby version
+1. Home page
+2. Admin panel with CRUD pages for nonprofits and their projects
+3. Search page for companies
 
-* System dependencies
+This is how it looks:
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+![Demo](/public/videos/demo.mp4)
